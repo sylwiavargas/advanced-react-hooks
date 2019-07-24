@@ -11,42 +11,75 @@ import fetchPokemon from '../fetch-pokemon'
 // 🦉 it's a good idea to add a default case handler that throws an error if
 // an unsupported action type is supplied. That way you avoid typo issues!
 
+function pokemonReducer(state, action) {
+  switch (action.type) {
+    case 'LOADING': {
+      return {loading: true, pokemon: null, error: null}
+    }
+    case 'LOADED': {
+      return {loading: false, pokemon: action.pokemon, error: null}
+    }
+    case 'ERROR': {
+      return {loading: false, pokemon: null, error: action.error}
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`)
+    }
+  }
+}
+
 function PokemonInfo({pokemonName}) {
   // 🐨 add a React.useReducer right here.
   // 💰 your initial state could be something like: {pokemon: null, loading: false, error: null}
+  const [state, dispatch] = React.useReducer(pokemonReducer, {
+    pokemon: null,
+    loading: false,
+    error: null,
+  })
+  const {pokemon, loading, error} = state
 
   // 💣 destroy all three of these useStates
-  const [pokemon, setPokemon] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(null)
+  // const [pokemon, setPokemon] = React.useState(null)
+  // const [loading, setLoading] = React.useState(false)
+  // const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
     if (!pokemonName) {
       return
     }
-    // 🐨 dispatch a LOADING action here
-    // 💣 remove all these sets
-    setLoading(true)
-    setError(null)
-    setPokemon(null)
+    dispatch({type: 'LOADING'})
     fetchPokemon(pokemonName).then(
       pokemon => {
-        // 🐨 dispatch a LOADED action here
-        // 💰 you can pass the pokemon as part of the action you dispatch: dispatch({type: 'LOADED', pokemon})
-        // 💣 remove all these sets
-        setLoading(false)
-        setError(null)
-        setPokemon(pokemon)
+        dispatch({type: 'LOADED', pokemon})
       },
       error => {
-        // 🐨 dispatch an ERROR action here
-        // 💣 remove all these sets
-        setLoading(false)
-        setError(error)
-        setPokemon(null)
+        dispatch({type: 'ERROR', error})
       },
     )
   }, [pokemonName])
+    // 🐨 dispatch a LOADING action here
+    // 💣 remove all these sets
+  //   setLoading(true)
+  //   setError(null)
+  //   setPokemon(null)
+  //   fetchPokemon(pokemonName).then(
+  //     pokemon => {
+  //       // 🐨 dispatch a LOADED action here
+  //       // 💰 you can pass the pokemon as part of the action you dispatch: dispatch({type: 'LOADED', pokemon})
+  //       // 💣 remove all these sets
+  //       setLoading(false)
+  //       setError(null)
+  //       setPokemon(pokemon)
+  //     },
+  //     error => {
+  //       // 🐨 dispatch an ERROR action here
+  //       // 💣 remove all these sets
+  //       setLoading(false)
+  //       setError(error)
+  //       setPokemon(null)
+  //     },
+  //   )
+  // }, [pokemonName])
 
   return (
     <div
