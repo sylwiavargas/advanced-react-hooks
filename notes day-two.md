@@ -48,18 +48,43 @@ async callbacks are different are different each time because it's a closure
 
 if we don't provide dependencies, useEffect will hit dispatch that will re-render because it's a promise i.e. different object every time; providing the empty array at the end prevents that;
 
-## useCallback vs useMemo
+redux has unstable API
+react hooks (context + useReducer) has stable api
+react useMemo prevents unnecessary rerenders
+
+### useCallback vs useMemo
 read the blog post!
 
 useCallback is built on top of useMemo
 if overused, the app will get slower
 
-useMemo
+## exc 3
+pay attention to that only usage is exported
 
+hooks provide nicer experience for the user than renderprops + it's easier to use Hooks
+
+Kent hates recompose because every time he sees a code with it, he doesn't know what's going on
+
+testing with context with so many layers of providers:
+render (<CountProvider>
+<CountDisplay />
+</CountProvider>)
+and overriding the value: <CountProvider value={5}>
+
+## exc 5
+useLayoutEffect looks pretty
+if your effect is making observable changes to the DOM then useLayoutEffect, otherwise useEffect
+useLayoutEffect is longer
+
+## exc 6
+useImperativeHandle has useLayoutEffect under the hood
+
+## exc 7
+if you're using hooks that use hooks
 
 ## Questions:
 - redux middleware
-- react context
+- react context / context providers
 - immutable state
 - lodash
 - deep copy
@@ -70,6 +95,21 @@ useMemo
 - "dependencies are stable"
 - referential equality
 - caching
+- React.lazy(loader)
+- children prop
+- event bubbling
+- HoC
+- HoC vs renderprops
+- recompose
+- shallow rendering (jest mock <- ? to render without children)
+- side-effects
+- afterBrowserPaints
+- cleanupPreviousEffects
+- useImperativeHandle
+- refs (e.g. .forwardRef)
+- formatter function
+
+
 
 ## Read more
 - useReducer vs useState blog post by Wieruch
@@ -77,3 +117,21 @@ useMemo
 - Application State Management with React by Kent C. Dodds
 - bookshelf repo by Kent C. Dodds
 - useCallback vs useMemo by Kent C. Dodds
+- Application State Management
+- lifting State UP -> docs https://reactjs.org/docs/lifting-state-up.html
+- '@reach/router'
+- import {createBrowserHistory} from 'history'
+- never write another HoC Michael Jackson (Kent uses css not HoCs)
+- React Hooks: What's going to happen to render props? by Kent C. Dodds
+- testing-library.com
+- why I never use shallow rendering by Kent
+- how to use React Context effectively
+- look at instapaper.com or app.getpocket.com
+- [Imperative vs Declarative Programming](https://tylermcginnis.com/imperative-vs-declarative-programming/)
+
+-------------------------------
+CODEBUDDIES!!!!!!!!!!!
+
+https://spectrum.chat/kentcdodds
+
+testing javascript with Kent

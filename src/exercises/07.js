@@ -8,7 +8,7 @@ function useMedia(query, initialState = false) {
   // 💰 here's the formatted label I use: `useMedia(\`${query}\`) => ${state}`
 
   React.useEffect(() => {
-    let mounted = true
+    let mounted = true 
     const mql = window.matchMedia(query)
     function onChange() {
       if (!mounted) {
